@@ -471,10 +471,7 @@ function be_display_posts_shortcode( $atts ) {
 		if( $include_content ) {
 			add_filter( 'shortcode_atts_display-posts', 'be_display_posts_off', 10, 3 );
 
-			/** This filter is documented in wp-includes/post-template.php */
-			$explodedArray = get_the_content();
-
-			$getContent = explode("\n" ,$explodedArray[0], 2);
+			$getContent = explode("\n" , get_the_content(), 2);
 			$showContent .= $getContent[0] . "[read more='Read more' less='Read less']" . $getContent[1] . "[/read]";
 
 			/** This filter is documented in wp-includes/post-template.php */
