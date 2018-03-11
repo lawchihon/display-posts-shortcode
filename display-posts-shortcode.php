@@ -62,6 +62,7 @@ function be_display_posts_shortcode( $atts ) {
 		'image_size'           => false,
 		'include_author'       => false,
 		'include_content'      => false,
+		'include_read_more'    => false,
 		'include_date'         => false,
 		'include_date_modified'=> false,
 		'include_excerpt'      => false,
