@@ -118,6 +118,7 @@ function be_display_posts_shortcode( $atts ) {
 	$include_title        = filter_var( $atts['include_title'], FILTER_VALIDATE_BOOLEAN );
 	$include_author       = filter_var( $atts['include_author'], FILTER_VALIDATE_BOOLEAN );
 	$include_content      = filter_var( $atts['include_content'], FILTER_VALIDATE_BOOLEAN );
+	$include_read_more      = filter_var( $atts['include_read_more'], FILTER_VALIDATE_BOOLEAN );
 	$include_date         = filter_var( $atts['include_date'], FILTER_VALIDATE_BOOLEAN );
 	$include_date_modified= filter_var( $atts['include_date_modified'], FILTER_VALIDATE_BOOLEAN );
 	$include_excerpt      = filter_var( $atts['include_excerpt'], FILTER_VALIDATE_BOOLEAN );
@@ -470,8 +471,16 @@ function be_display_posts_shortcode( $atts ) {
 
 		if( $include_content ) {
 			add_filter( 'shortcode_atts_display-posts', 'be_display_posts_off', 10, 3 );
+
+			if ( $include_read_more ) {
+				$getContent = explode("\n" , get_the_content(), 2);
+				$contentText = $getContent[0] . "[read more='Read more' less='Read less']" . $getContent[1] . "[/read]";
+			} else {
+				$contentText = get_the_content();
+			}
+
 			/** This filter is documented in wp-includes/post-template.php */
-			$content = '<div class="' . implode( ' ', $content_class ) . '">' . apply_filters( 'the_content', get_the_content() ) . '</div>';
+			$content = '<div class="' . implode( ' ', $content_class ) . '">' . apply_filters( 'the_content', $contentText ) . '</div>';
 			remove_filter( 'shortcode_atts_display-posts', 'be_display_posts_off', 10, 3 );
 		}
 
